@@ -105,7 +105,7 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
-        <button onclick="showBarcode();">Show Barcode</button>
+        <button id="showBarcode">Show Barcode</button>
         <div id="myModal" class="modal">
             <span class="close">&times;</span>
             <img class="modal-content" id="img01">
@@ -150,21 +150,20 @@
         });	
         Telegram.WebApp.MainButton.show();
 
+        // BARCODE
         var modal = document.getElementById("myModal");
-        var img = document.getElementById("myImg");
+        var btn = document.getElementById("showBarcode");
+        var span = document.getElementsByClassName("close")[0];
         var modalImg = document.getElementById("img01");
 
-        img.onclick = function () {
+        btn.onclick = function () {
             modal.style.display = "block";
-            modalImg.src = this.src;
+            modalImg.src = 'https://cdn.shopify.com/shopifycloud/help/assets/manual/sell-in-person/hardware/barcode-scanner/1d-barcode-4fbf513f48675746ba39d9ea5078f377e5e1bb9de2966336088af8394b893b78.png'; // sostituisci con l'URL della tua immagine
         }
-
-        var span = document.getElementsByClassName("close")[0];
 
         span.onclick = function () {
             modal.style.display = "none";
         }
-
 
         // Function to call showPopup API
         function showPopup() {
@@ -176,22 +175,6 @@
                     {type: 'cancel'},
                 ]
             }, function(btn) {
-                if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://ton.org/');
-                }
-            });
-        };
-
-        // Function to showBarcode
-        function showBarcode() {
-            Telegram.WebApp.showPopup({
-                title: 'Title',
-                message: 'Some message',
-                buttons: [
-                    { id: 'link', type: 'default', text: 'Open ton.org' },
-                    { type: 'cancel' },
-                ]
-            }, function (btn) {
                 if (btn === 'link') {
                     Telegram.WebApp.openLink('https://ton.org/');
                 }
