@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Telegram Mini Apps Vanilla JS Sample App</title>
+    <title>PET4BTC</title>
     <style>
         body {
             --bg-color: var(--tg-theme-bg-color);
@@ -59,6 +59,41 @@
         #viewport-params-expand {
             top: 30px;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: #bbb;
+                text-decoration: none;
+                cursor: pointer;
+            }
     </style>
 </head>
 
@@ -70,6 +105,11 @@
         <h1>Modals</h1>
         <button onclick="Telegram.WebApp.showAlert('Hello World!');">Launch Alert</button>
         <button onclick="showPopup();">Launch Popup</button>
+        <button onclick="showBarcode();">Show Barcode</button>
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+        </div>
 
         <h1>Links</h1>
         <ul>
@@ -110,6 +150,22 @@
         });	
         Telegram.WebApp.MainButton.show();
 
+        var modal = document.getElementById("myModal");
+        var img = document.getElementById("myImg");
+        var modalImg = document.getElementById("img01");
+
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+
         // Function to call showPopup API
         function showPopup() {
             Telegram.WebApp.showPopup({
@@ -120,6 +176,22 @@
                     {type: 'cancel'},
                 ]
             }, function(btn) {
+                if (btn === 'link') {
+                    Telegram.WebApp.openLink('https://ton.org/');
+                }
+            });
+        };
+
+        // Function to showBarcode
+        function showBarcode() {
+            Telegram.WebApp.showPopup({
+                title: 'Title',
+                message: 'Some message',
+                buttons: [
+                    { id: 'link', type: 'default', text: 'Open ton.org' },
+                    { type: 'cancel' },
+                ]
+            }, function (btn) {
                 if (btn === 'link') {
                     Telegram.WebApp.openLink('https://ton.org/');
                 }
